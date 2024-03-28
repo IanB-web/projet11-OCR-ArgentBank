@@ -2,9 +2,9 @@ import React from "react";
 import Header from "../../components/layout/header";
 import Footer from "../../components/layout/footer";
 
-import "./user.scss";
+import "./profile.scss";
 
-const User = () => {
+const Profile = () => {
   return (
     <>
       <Header />
@@ -56,4 +56,4 @@ const User = () => {
   );
 };
 
-export default User;
+export default Profile;
