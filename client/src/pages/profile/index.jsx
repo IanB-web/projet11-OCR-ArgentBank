@@ -1,23 +1,44 @@
 import React from "react";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+
 import Header from "../../components/layout/header";
 import Footer from "../../components/layout/footer";
+import UserInfoForm from "../../components/partials/userinfoform";
 
 import "./profile.scss";
 
 const Profile = () => {
+  const userInfo = useSelector((state) => state.user.userInfo);
+  const [edition, setEdition] = useState(false);
+  const handleEdition = () => {
+    setEdition(true);
+  };
+
   return (
     <>
       <Header />
 
       <main className="main bg-dark">
         <div className="header">
-          <h1>
-            Welcome back
-            <br />
-            Tony Jarvis!
-          </h1>
-          <button className="edit-button">Edit Name</button>
+          {edition ? (
+            <UserInfoForm
+              setEdition={setEdition}
+              userName={userInfo.userName}
+              lastName={userInfo.lastName}
+              firstName={userInfo.firstName}
+            />
+          ) : (
+            <>
+              <h1>
+                Welcome back <br />
+                {userInfo.userName}
+              </h1>
+              <button className="edit-button" onClick={handleEdition}>Edit Name</button>
+            </>
+          )}
         </div>
+
         <h2 className="sr-only">Accounts</h2>
         <section className="account">
           <div className="account-content-wrapper">

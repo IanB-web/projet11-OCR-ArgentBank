@@ -1,0 +1,28 @@
+.editinfo{
+    &__form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+    }
+    &__input{
+        display: flex;
+        width: 280px;
+        height: 28px;
+        justify-content: space-between;
+        align-items: center;
+        input {
+            height: 28px;
+        }
+    }
+    &__btns{
+        display: flex;
+        width: 280px;
+        justify-content: space-around;
+        button {
+            width: 90px;
+            border-radius: 3px;
+        }
+    }
+}

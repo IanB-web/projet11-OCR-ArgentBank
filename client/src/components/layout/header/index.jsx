@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import "./header.scss";
 
 import routes from "../../../router/routes.js";
+import Navbar from "./navbar";
 
 const Header = () => {
   return (
@@ -16,12 +17,8 @@ const Header = () => {
           />
           <h1 className="sr-only">Argent Bank</h1>
         </NavLink>
-        <NavLink  to={routes.login}>
-          <p className="main-nav-item">
-            <i className="fa fa-user-circle"></i>
-            Sign In
-          </p>
-        </NavLink>
+        
+        <Navbar/>
 
       </nav>
     </header>
