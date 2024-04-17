@@ -1,4 +1,4 @@
-swagger: '2.0.0'
+swagger: '2.0'
 info:
   title: Bank Argent API documentation
   description: Contains all available API endpoints in this codebase
@@ -107,55 +107,38 @@ paths:
         - Transactions
       summary: Returns transactions history
       description: Retrieve all transactions for the current month
+      produces:
+        - application/json
+      parameters: []
       security:
       - Bearer: []
       responses:
         '200':
           description: Success. List of transactions loading.
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    date:
-                      type: string
-                      format: date-time
-                    description:
-                      type: string
-                    amount:
-                      type: number
-                    balance:
-                      type: number
-                    transaction_type:
-                      type: string
-                    category:
-                      type: string
-                    note:
-                      type: string
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                date:
+                  type: string
+                  format: date-time
+                description:
+                  type: string
+                amount:
+                  type: number
+                balance:
+                  type: number
+                transaction_type:
+                  type: string
+                category:
+                  type: string
+                note:
+                  type: string
         '401':
           description: Invalid Fields or missing token.
         '403':
           description: Unauthorized.  
-        '500':
-          description: Internal Server Error
-
-  /transactions/{transactionsId}:
-    get: 
-      tags:
-        - Transactions
-      summary: unique transaction selection
-      description: Retrieve details of a specific transaction
-      security:
-      - Bearer: []
-      responses:
-        '200':
-          description: Success. List of transactions loading.
-        '401':
-          description: Invalid Fields or missing token.
-        '403':
-          description: Unauthorized.
         '500':
           description: Internal Server Error
   /transactions/{transactionId}/category:
@@ -164,27 +147,56 @@ paths:
         - Transactions
       summary: Modification of the category of a specific transaction.
       description: allow to modify the category of a specific transaction.
+      consumes:
+        - application/json
+      produces:
+        - application/json
       parameters:
-        - name: transactionId
-          in: path
-          required: true
+        - in: path
+          name: transactionId
           description: ID de la transaction à modifier.
+          required: true
+          type: integer
+        - in: body
+          name: body
+          description: New category
+          required: true
           schema:
-            type: integer
+            type: object
+            properties:
+              category:
+                type: string
       security:
         - Bearer: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                category:
-                  type: string
       responses:
         '200':
           description: Categorie successfully modified.
+        '401':
+          description: Invalid Fields or missing token.
+        '403':
+          description: Unauthorized.
+        '500':
+          description: Internal Server Error
+    delete:
+      tags:
+        - Transactions
+      summary: Modification of the category of a specific transaction.
+      description: allow to modify the category of a specific transaction.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: transactionId
+          description: ID de la transaction à modifier.
+          required: true
+          type: integer
+      security:
+        - Bearer: []
+      responses:
+        '200':
+          description: Categorie successfully deleted.
         '401':
           description: Invalid Fields or missing token.
         '403':
@@ -198,24 +210,53 @@ paths:
         - Transactions
       summary: Modify a note of a transaction
       description: allow to modify the note of a specific transaction.
+      consumes:
+        - application/json
+      produces:
+        - application/json
       parameters:
-        - name: transactionId
-          in: path
+        - in: path
+          name: transactionId
+          description: ID de la transaction à modifier.
           required: true
-          description: ID of the transaction to modify.
+          type: integer
+        - in: body
+          name: body
+          description: Nouvelle note
+          required: true
           schema:
-            type: integer
+            type: object
+            properties:
+              note:
+                type: string
       security:
         - Bearer: []
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                note:
-                  type: string
+      responses:
+        '200':
+          description: Note successfully modified.
+        '401':
+          description: Invalid Fields or missing token.
+        '403':
+          description: Unauthorized.
+        '500':
+          description: Internal Server Error
+    delete:
+      tags:
+        - Transactions
+      summary: Delete the note of a transaction.
+      description: allow to delete the note of a specific transaction.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: transactionId
+          description: ID de la transaction à modifier.
+          required: true
+          type: integer
+      security:
+        - Bearer: []
       responses:
         '200':
           description: Note successfully modified.
