@@ -1,4 +1,4 @@
-swagger: '2.0'
+swagger: '2.0.0'
 info:
   title: Bank Argent API documentation
   description: Contains all available API endpoints in this codebase
@@ -9,7 +9,6 @@ basePath: /api/v2
 schemes:
   - http
 paths:
-
   /user/login:
     post:
       tags:
@@ -102,24 +101,46 @@ paths:
           description: Invalid Fields
         '500':
           description: Internal Server Error
-
-  /transactions:
+  /transactions/history:
     get:
       tags:
         - Transactions
-      summary: Returns transactions inventories
+      summary: Returns transactions history
       description: Retrieve all transactions for the current month
       security:
-      - tokenAuth : []
+      - Bearer: []
       responses:
         '200':
           description: Success. List of transactions loading.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    date:
+                      type: string
+                      format: date-time
+                    description:
+                      type: string
+                    amount:
+                      type: number
+                    balance:
+                      type: number
+                    transaction_type:
+                      type: string
+                    category:
+                      type: string
+                    note:
+                      type: string
         '401':
           description: Invalid Fields or missing token.
         '403':
           description: Unauthorized.  
         '500':
           description: Internal Server Error
+
   /transactions/{transactionsId}:
     get: 
       tags:
@@ -127,10 +148,77 @@ paths:
       summary: unique transaction selection
       description: Retrieve details of a specific transaction
       security:
-      - tokenAuth : []
+      - Bearer: []
       responses:
         '200':
           description: Success. List of transactions loading.
+        '401':
+          description: Invalid Fields or missing token.
+        '403':
+          description: Unauthorized.
+        '500':
+          description: Internal Server Error
+  /transactions/{transactionId}/category:
+    put:
+      tags:
+        - Transactions
+      summary: Modification of the category of a specific transaction.
+      description: allow to modify the category of a specific transaction.
+      parameters:
+        - name: transactionId
+          in: path
+          required: true
+          description: ID de la transaction à modifier.
+          schema:
+            type: integer
+      security:
+        - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                category:
+                  type: string
+      responses:
+        '200':
+          description: Categorie successfully modified.
+        '401':
+          description: Invalid Fields or missing token.
+        '403':
+          description: Unauthorized.
+        '500':
+          description: Internal Server Error
+
+  /transactions/{transactionId}/note:
+    put:
+      tags:
+        - Transactions
+      summary: Modify a note of a transaction
+      description: allow to modify the note of a specific transaction.
+      parameters:
+        - name: transactionId
+          in: path
+          required: true
+          description: ID of the transaction to modify.
+          schema:
+            type: integer
+      security:
+        - Bearer: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                note:
+                  type: string
+      responses:
+        '200':
+          description: Note successfully modified.
         '401':
           description: Invalid Fields or missing token.
         '403':
@@ -143,10 +231,6 @@ securityDefinitions:
     type: apiKey
     name: Authorization
     in: header
-  TokenAuth:
-   type: apiKey
-   name: Authorization
-   in: header
 
 definitions:
   User:
@@ -206,7 +290,7 @@ definitions:
         description: transaction date
       description:
         type: string
-        description: user password
+        description: fbdb
       firstName:
         type: string
         description: user first name
