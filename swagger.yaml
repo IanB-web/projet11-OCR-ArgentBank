@@ -154,7 +154,7 @@ paths:
       parameters:
         - in: path
           name: transactionId
-          description: ID de la transaction à modifier.
+          description: transaction's ID to modify..
           required: true
           type: integer
         - in: body
@@ -189,7 +189,7 @@ paths:
       parameters:
         - in: path
           name: transactionId
-          description: ID de la transaction à modifier.
+          description: transaction's ID to modify.
           required: true
           type: integer
       security:
@@ -217,7 +217,7 @@ paths:
       parameters:
         - in: path
           name: transactionId
-          description: ID de la transaction à modifier.
+          description: transaction's ID to modify.
           required: true
           type: integer
         - in: body
@@ -252,7 +252,7 @@ paths:
       parameters:
         - in: path
           name: transactionId
-          description: ID de la transaction à modifier.
+          description: transaction's ID to modify.
           required: true
           type: integer
       security:
