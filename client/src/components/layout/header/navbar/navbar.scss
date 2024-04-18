@@ -1,0 +1,18 @@
+.main-nav {
+    &-item {
+        font-size: 25px;
+        &:hover {
+            color: #00bc77;
+        }
+    }
+    &-links {
+        display: flex;
+        gap: 10px;
+    }
+}
+.user-links {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}

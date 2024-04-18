@@ -18,8 +18,8 @@ const NavbarLogged = () => {
     };
 
     return (
-        <>
-        <NavLink className="main-nav-item" to={routes.profile}>
+        <div className='main-nav-links'>
+        <NavLink className="main-nav-item user-links" to={routes.profile}>
             {state.userInfo.userName}
         <i class="fa fa-user-circle"></i> 
         </NavLink>
@@ -32,7 +32,7 @@ const NavbarLogged = () => {
             <i className='fa fa-power-off'></i>
         </NavLink>
         
-        </>
+        </div>
     );
 };
 
