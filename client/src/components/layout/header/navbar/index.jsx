@@ -8,9 +8,9 @@ const NavBar = () => {
     const state = useSelector((state) => state.user)
 
     return (
-        <div>
+        <>
             {state.isLogged ? <NavbarLogged /> : <NavbarNotLogged/>}
-        </div>
+        </>
     );
 };
 

@@ -12,7 +12,7 @@ const Header = () => {
         <NavLink className="main-nav-logo" to={routes.home}>
           <img
             className="main-nav-logo-image"
-            src="src/assets/img/argentBankLogo.png"
+            src="src/assets/img/argentBankLogo.jpg"
             alt="Argent Bank Logo"
           />
           <h1 className="sr-only">Argent Bank</h1>
