@@ -9,98 +9,6 @@ basePath: /api/v2
 schemes:
   - http
 paths:
-  /user/login:
-    post:
-      tags:
-        - User Module
-      summary: Login
-      description: API for Login
-      parameters:
-        - in: body
-          name: body
-          description: Login Payload
-          required: true
-          schema:
-            $ref: '#/definitions/Login'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: Login Successfully
-          schema:
-            $ref: '#/definitions/LoginResponse'
-        '400':
-          description: Invalid Fields
-        '500':
-          description: Internal Server Error
-  /user/signup:
-    post:
-      tags:
-        - User Module
-      summary: Signup
-      description: API for Signup
-      parameters:
-        - in: body
-          name: body
-          description: Signup Payload
-          required: true
-          schema:
-            $ref: '#/definitions/User'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: Signup Successfully
-          schema:
-            $ref: '#/definitions/ApiResponse'
-        '400':
-          description: Invalid Fields
-        '500':
-          description: Internal Server Error
-  /user/profile:
-    post:
-      security:
-        - Bearer: []
-      tags:
-        - User Module
-      summary: User Profile API
-      description: API for fetching a user profile
-      #produces:
-       # - application/json
-      responses:
-        '200':
-          description: User profile retrieved successully
-          schema:
-            $ref: '#/definitions/ApiResponse'
-        '400':
-          description: Invalid Fields
-        '500':
-          description: Internal Server Error
-    put:
-      security:
-        - Bearer: []
-      tags:
-        - User Module
-      summary: User Profile API
-      description: API for updating a user profile
-      parameters:
-        - in: body
-          name: body
-          description: Update user profile attributes
-          required: true
-          schema:
-            $ref: '#/definitions/UserProfile'
-      produces:
-        - application/json
-      responses:
-        '200':
-          description: User profile retrieved successully
-          schema:
-            $ref: '#/definitions/ApiResponse'
-        '400':
-          description: Invalid Fields
-        '500':
-          description: Internal Server Error
   /transactions/:
     get:
       tags:
@@ -120,8 +28,6 @@ paths:
             items:
               type: object
               properties:
-                id:
-                  type: string
                 date:
                   type: string
                   format: date-time
@@ -156,8 +62,6 @@ paths:
             items:
               type: object
               properties:
-                id:
-                  type: string
                 date:
                   type: string
                   format: date-time
@@ -179,104 +83,36 @@ paths:
           description: Unauthorized.  
         '500':
           description: Internal Server Error
-  /transactionOptions:
-    get:
-      tags:
-        - Transactions
-      summary: Returns a specific transaction option
-      description: Retrieve all options for a specific transaction
-      produces:
-        - application/json
-      parameters: []
-      security:
-      - Bearer: []
-      responses:
-        '200':
-          description: Success. List of transaction's options loading.
-          schema:
-            type: object
-            properties:
-              id:
-                type: string
-              transactionId:
-                type: string
-              transaction_type:
-                type: string
-              category:
-                type: string
-              note:
-                type: string
-        '401':
-          description: Invalid Fields or missing token.
-        '403':
-          description: Unauthorized.  
-        '500':
-          description: Internal Server Error
-    post:
-      tags:
-        - Transactions
-      summary: create a new category and note for a specific transaction
-      description: create a new category and note for a specific transaction
-      produces:
-        - application/json
-      parameters:
-        - in: body
-          name: body
-          description: transaction options Payload
-          required: true
-          schema:
-            $ref: '#/definitions/TransactionOptionsNew'
-      security:
-      - Bearer: []
-      responses:
-        '201':
-          description: Success. List of transactions loading.
-          schema:
-            type: object
-            properties:
-              id:
-                type: string
-              transactionId:
-                type: string
-              transaction_type:
-                type: string
-              category:
-                type: string
-              note:
-                type: string
-        '401':
-          description: Invalid Fields or missing token.
-        '403':
-          description: Unauthorized.  
-        '500':
-          description: Internal Server Error    
-  /transactionOptions/{TransactionOptionsId}:
+  /transactions/{transactionId}/category:
     put:
       tags:
         - Transactions
-      summary: Update or add informations of a specific transaction.
-      description: allow to modify informations a specific transaction.
+      summary: Modification of the category of a specific transaction.
+      description: allow to modify the category of a specific transaction.
       consumes:
         - application/json
       produces:
         - application/json
       parameters:
         - in: path
-          name: transactionOptionsId
+          name: transactionId
           description: transaction's ID to modify..
           required: true
           type: integer
         - in: body
           name: body
-          description: transaction options Payload
+          description: New category
           required: true
           schema:
-            $ref: '#/definitions/TransactionOptions'
+            type: object
+            properties:
+              category:
+                type: string
       security:
         - Bearer: []
       responses:
         '200':
-          description: Informations successfully modified.
+          description: Categorie successfully modified.
         '401':
           description: Invalid Fields or missing token.
         '403':
@@ -286,8 +122,8 @@ paths:
     delete:
       tags:
         - Transactions
-      summary: Delete informations of a specific transaction.
-      description: allow to delete some informations of a specific transaction.
+      summary: Modification of the category of a specific transaction.
+      description: allow to modify the category of a specific transaction.
       consumes:
         - application/json
       produces:
@@ -295,21 +131,84 @@ paths:
       parameters:
         - in: path
           name: transactionId
-          description: transaction's informations' ID to delete
+          description: transaction's ID to modify.
           required: true
           type: integer
       security:
         - Bearer: []
       responses:
-        '204':
-          description: Informations successfully deleted.
+        '200':
+          description: Categorie successfully deleted.
         '401':
           description: Invalid Fields or missing token.
         '403':
           description: Unauthorized.
         '500':
           description: Internal Server Error
-          
+
+  /transactions/{transactionId}/note:
+    put:
+      tags:
+        - Transactions
+      summary: Modify a note of a transaction
+      description: allow to modify the note of a specific transaction.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: transactionId
+          description: transaction's ID to modify.
+          required: true
+          type: integer
+        - in: body
+          name: body
+          description: Nouvelle note
+          required: true
+          schema:
+            type: object
+            properties:
+              note:
+                type: string
+      security:
+        - Bearer: []
+      responses:
+        '200':
+          description: Note successfully modified.
+        '401':
+          description: Invalid Fields or missing token.
+        '403':
+          description: Unauthorized.
+        '500':
+          description: Internal Server Error
+    delete:
+      tags:
+        - Transactions
+      summary: Delete the note of a transaction.
+      description: allow to delete the note of a specific transaction.
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: transactionId
+          description: transaction's ID to modify.
+          required: true
+          type: integer
+      security:
+        - Bearer: []
+      responses:
+        '200':
+          description: Note successfully modified.
+        '401':
+          description: Invalid Fields or missing token.
+        '403':
+          description: Unauthorized.
+        '500':
+          description: Internal Server Error
+
 securityDefinitions:
   Bearer:
     type: apiKey
@@ -366,19 +265,21 @@ definitions:
     properties:
       userName:
         type: string
-  TransactionOptionsNew:
-      properties:
-              transactionId:
-                type: string
-              transaction_type:
-                type: string
-              category:
-                type: string
-              note:
-                type: string
-  TransactionOptions:
-      properties:
-              category:
-                type: string
-              note:
-                type: string
+  Transactions:
+    properties:
+      date:
+        type: string
+        format: date-time
+        description: transaction date
+      description:
+        type: string
+        description: transaction description
+      firstName:
+        type: string
+        description: user first name
+      lastName:
+        type: string
+        description: user last name
+      userName:
+        type: string
+        description: user public name

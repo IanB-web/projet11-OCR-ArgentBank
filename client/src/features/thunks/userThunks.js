@@ -3,7 +3,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 // Définition de l'url de l'api
 const url = "http://localhost:3001/api/v1/user/";
 
-// création du thunk pour modifier le store de façon asynchrone
+// création de thunk pour modifier le store de façon asynchrone
 export const fetchUserByEmail = createAsyncThunk(
   "users/fetchByEmailStatus",
   async (userInfo, thunkAPI) => {
