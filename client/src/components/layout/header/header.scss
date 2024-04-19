@@ -34,3 +34,15 @@
     max-width: 100%;
     width: 200px;
   }
+
+  //responsive
+  @media screen and (max-width:380px) {
+    .main-nav{
+      flex-direction: column;
+    }
+    .main-nav-links{
+      margin: 20px 0;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  }
