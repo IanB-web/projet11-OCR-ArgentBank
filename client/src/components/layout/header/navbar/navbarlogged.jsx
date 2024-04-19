@@ -21,7 +21,7 @@ const NavbarLogged = () => {
         <div className='main-nav-links'>
         <NavLink className="main-nav-item user-links" to={routes.profile}>
             {state.userInfo.userName}
-        <i class="fa fa-user-circle"></i> 
+        <i className="fa fa-user-circle"></i> 
         </NavLink>
 
         <NavLink className="main-nav-item" to >
